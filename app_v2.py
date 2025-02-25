@@ -223,64 +223,64 @@ if 'is_admin' not in st.session_state:
     st.session_state.is_admin = False
 
      
-# Login
-def login():
-    with st.form(key='login_form', clear_on_submit=True):
-        username = st.text_input("Username", key="login_username", help="Enter your username")
-        password = st.text_input("Password", type="password", key="login_password", help="Enter your password")
-        submit_button = st.form_submit_button("Login", help="Click to login")
+# # Login
+# def login():
+#     with st.form(key='login_form', clear_on_submit=True):
+#         username = st.text_input("Username", key="login_username", help="Enter your username")
+#         password = st.text_input("Password", type="password", key="login_password", help="Enter your password")
+#         submit_button = st.form_submit_button("Login", help="Click to login")
         
-        if submit_button:
-            if not username or not password:
-                st.error("Please enter both username and password.")
-            elif is_admin(username, password):
-                st.session_state.logged_in = True
-                st.session_state.username = username
-                st.session_state.is_admin = True
-                reset_session_state()
-                st.success("Admin login successful!")
-                st.rerun()
-            elif check_credentials(username, password):
-                st.session_state.logged_in = True
-                st.session_state.username = username
-                reset_session_state()
-                st.success("Login successful!")
-                st.rerun()
-            else:
-                st.error("Invalid username or password")
+#         if submit_button:
+#             if not username or not password:
+#                 st.error("Please enter both username and password.")
+#             elif is_admin(username, password):
+#                 st.session_state.logged_in = True
+#                 st.session_state.username = username
+#                 st.session_state.is_admin = True
+#                 reset_session_state()
+#                 st.success("Admin login successful!")
+#                 st.rerun()
+#             elif check_credentials(username, password):
+#                 st.session_state.logged_in = True
+#                 st.session_state.username = username
+#                 reset_session_state()
+#                 st.success("Login successful!")
+#                 st.rerun()
+#             else:
+#                 st.error("Invalid username or password")
                 
-# Session State Reset           
-def reset_session_state():
-    st.session_state.chat_history = [] 
-    st.session_state.processed_files = {} 
-    st.session_state.vectorstore = None  
-    st.session_state.qa_chain = None  
+# # Session State Reset           
+# def reset_session_state():
+#     st.session_state.chat_history = [] 
+#     st.session_state.processed_files = {} 
+#     st.session_state.vectorstore = None  
+#     st.session_state.qa_chain = None  
             
             
-# Sign-up 
-def signup():
-    with st.form(key='signup_form', clear_on_submit=True):
-        username = st.text_input("Username", key="signup_username", help="Choose a new username")
-        password = st.text_input("Password", type="password", key="signup_password", help="Set your password")
-        confirm_password = st.text_input("Confirm Password", type="password", key="confirm_password", help="Re-enter your password")   
+# # Sign-up 
+# def signup():
+#     with st.form(key='signup_form', clear_on_submit=True):
+#         username = st.text_input("Username", key="signup_username", help="Choose a new username")
+#         password = st.text_input("Password", type="password", key="signup_password", help="Set your password")
+#         confirm_password = st.text_input("Confirm Password", type="password", key="confirm_password", help="Re-enter your password")   
         
-        submit_button = st.form_submit_button("Sign Up", help="Create a new account")
+#         submit_button = st.form_submit_button("Sign Up", help="Create a new account")
         
-        if submit_button:
-            if not username or not password or not confirm_password:
-                st.error("Please enter both username and password.")
-            elif password != confirm_password:
-                st.error("Passwords do not match. Please try again.")
-            elif not check_password_strength(password):
-                st.error("Password must be at least 7 characters long, contain at least one uppercase letter, one lowercase letter, and one special character.")
-            elif username_exists(username):
-                st.error("Username already exists. Please choose a different username.")
-            else:
-                create_user(username, password)
-                st.success("User created successfully!")
-                st.session_state.logged_in = True
-                st.session_state.username = username
-                st.rerun()
+#         if submit_button:
+#             if not username or not password or not confirm_password:
+#                 st.error("Please enter both username and password.")
+#             elif password != confirm_password:
+#                 st.error("Passwords do not match. Please try again.")
+#             elif not check_password_strength(password):
+#                 st.error("Password must be at least 7 characters long, contain at least one uppercase letter, one lowercase letter, and one special character.")
+#             elif username_exists(username):
+#                 st.error("Username already exists. Please choose a different username.")
+#             else:
+#                 create_user(username, password)
+#                 st.success("User created successfully!")
+#                 st.session_state.logged_in = True
+#                 st.session_state.username = username
+#                 st.rerun()
 
 # Main logic to toggle between login and signup form
 if 'logged_in' not in st.session_state:
@@ -327,10 +327,10 @@ if not st.session_state.logged_in:
  }
 )
 
-    if selected == "Login":
-        login()
-    elif selected == "Sign Up":
-        signup()
+    # if selected == "Login":
+    #     login()
+    # elif selected == "Sign Up":
+    #     signup()
 else:
     # st.sidebar.markdown("You are now logged in.")
     st.sidebar.markdown(
