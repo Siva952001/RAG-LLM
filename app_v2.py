@@ -429,7 +429,7 @@ else:
         # Overlap adjustments (dynamic scaling)
         chunk_overlap = max(100, int(chunk_size * 0.2))
 
-        # Ensure chunk_size and chunk_overlap are reasonable
+        # Ensure chunk_size and chunk_overlap
         chunk_size = max(chunk_size, 300)  
         chunk_overlap = min(chunk_overlap, chunk_size // 2)  
 
