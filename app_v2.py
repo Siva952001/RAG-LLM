@@ -282,65 +282,65 @@ if 'is_admin' not in st.session_state:
 #                 st.session_state.username = username
 #                 st.rerun()
 
-# Main logic to toggle between login and signup form
-if 'logged_in' not in st.session_state:
-    st.session_state.logged_in = False
+# # Main logic to toggle between login and signup form
+# if 'logged_in' not in st.session_state:
+#     st.session_state.logged_in = False
 
-if not st.session_state.logged_in: 
-    selected = option_menu(
-        menu_title=None, 
-        options=["Login", "Sign Up"],  
-        icons=["box-arrow-in-right", "person-plus"], 
-        menu_icon="cast",  
-        default_index=0,  
-        orientation="horizontal",  
-        styles = {
-    "container": {
-        "padding": "0!important", 
-        "background-color": "#ffffff",  
-        "transition": "background-color 0.3s ease"  
-    },
-    "icon": {
-        "color": "#007bff",  
-        "font-size": "25px",
-        "transition": "color 0.3s ease"  
-    },
-    "nav-link": {
-        "font-size": "16px", 
-        "text-align": "center", 
-        "margin": "0px", 
-        "--hover-color": "#f0f0f0",  
-        "color": "#333",  
-        "transition": "color 0.3s ease, background-color 0.3s ease"  
-    },
-    "nav-link-hover": {
-        "background-color": "#e5e5e5",  
-        "color": "#0056b3",  
-        "transition": "background-color 0.3s ease, color 0.3s ease"  
-    },
-    "nav-link-selected": {
-        "background-color": "#0056b3",  
-        "color": "white", 
-        "font-weight": "bold",  
-        "transition": "background-color 0.3s ease, color 0.3s ease"  
-    }
- }
-)
+# if not st.session_state.logged_in: 
+#     selected = option_menu(
+#         menu_title=None, 
+#         options=["Login", "Sign Up"],  
+#         icons=["box-arrow-in-right", "person-plus"], 
+#         menu_icon="cast",  
+#         default_index=0,  
+#         orientation="horizontal",  
+#         styles = {
+#     "container": {
+#         "padding": "0!important", 
+#         "background-color": "#ffffff",  
+#         "transition": "background-color 0.3s ease"  
+#     },
+#     "icon": {
+#         "color": "#007bff",  
+#         "font-size": "25px",
+#         "transition": "color 0.3s ease"  
+#     },
+#     "nav-link": {
+#         "font-size": "16px", 
+#         "text-align": "center", 
+#         "margin": "0px", 
+#         "--hover-color": "#f0f0f0",  
+#         "color": "#333",  
+#         "transition": "color 0.3s ease, background-color 0.3s ease"  
+#     },
+#     "nav-link-hover": {
+#         "background-color": "#e5e5e5",  
+#         "color": "#0056b3",  
+#         "transition": "background-color 0.3s ease, color 0.3s ease"  
+#     },
+#     "nav-link-selected": {
+#         "background-color": "#0056b3",  
+#         "color": "white", 
+#         "font-weight": "bold",  
+#         "transition": "background-color 0.3s ease, color 0.3s ease"  
+#     }
+#  }
+# )
 
-    # if selected == "Login":
-    #     login()
-    # elif selected == "Sign Up":
-    #     signup()
-else:
-    # st.sidebar.markdown("You are now logged in.")
-    st.sidebar.markdown(
-    f"""
-    <div style="text-align: center; position:relative; bottom:88px ; right:12px; margin-bottom:16px; padding:15px;">
-        <img src="data:image/png;base64,{logo_base64}" alt="Logo" style="width: 150px;", "line-height:5.6," />
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+#     # if selected == "Login":
+#     #     login()
+#     # elif selected == "Sign Up":
+#     #     signup()
+# else:
+#     # st.sidebar.markdown("You are now logged in.")
+#     st.sidebar.markdown(
+#     f"""
+#     <div style="text-align: center; position:relative; bottom:88px ; right:12px; margin-bottom:16px; padding:15px;">
+#         <img src="data:image/png;base64,{logo_base64}" alt="Logo" style="width: 150px;", "line-height:5.6," />
+#     </div>
+#     """,
+#     unsafe_allow_html=True
+# )
     
     # Add category for admin  
     def add_category_to_db(category_name):
