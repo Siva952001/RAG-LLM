@@ -119,11 +119,7 @@ def create_user(username, password):
  
 # Models List   
 def list_models(model_dir):
-    try:
-        return [model for model in os.listdir(model_dir) if os.path.isdir(os.path.join(model_dir, model))]
-    except FileNotFoundError:
-        print(f"Warning: Model directory {model_dir} not found")
-        return []
+    return [model for model in os.listdir(model_dir) if os.path.isdir(os.path.join(model_dir, model))]
 
 # Admin Credential
 def is_admin(username, password):
@@ -199,12 +195,8 @@ if 'chat_history' not in st.session_state:
 
 if 'processed_files' not in st.session_state:
     st.session_state.processed_files = {}
-import platform
-if platform.system() == 'Windows':
-    MODEL_DIR = 'C:/Users/DEV-037/.ollama/models/manifests/registry.ollama.ai/library'
-else:
-    # Linux path
-    MODEL_DIR = '/home/adminuser/.ollama/models'
+
+MODEL_DIR = "C:/Users/DEV-037/.ollama/models/manifests/registry.ollama.ai/library"
 FILE_DIR = 'files'
 DATA_DIR = 'data'
 # translator = Translator()
@@ -223,124 +215,124 @@ if 'is_admin' not in st.session_state:
     st.session_state.is_admin = False
 
      
-# # Login
-# def login():
-#     with st.form(key='login_form', clear_on_submit=True):
-#         username = st.text_input("Username", key="login_username", help="Enter your username")
-#         password = st.text_input("Password", type="password", key="login_password", help="Enter your password")
-#         submit_button = st.form_submit_button("Login", help="Click to login")
+# Login
+def login():
+    with st.form(key='login_form', clear_on_submit=True):
+        username = st.text_input("Username", key="login_username", help="Enter your username")
+        password = st.text_input("Password", type="password", key="login_password", help="Enter your password")
+        submit_button = st.form_submit_button("Login", help="Click to login")
         
-#         if submit_button:
-#             if not username or not password:
-#                 st.error("Please enter both username and password.")
-#             elif is_admin(username, password):
-#                 st.session_state.logged_in = True
-#                 st.session_state.username = username
-#                 st.session_state.is_admin = True
-#                 reset_session_state()
-#                 st.success("Admin login successful!")
-#                 st.rerun()
-#             elif check_credentials(username, password):
-#                 st.session_state.logged_in = True
-#                 st.session_state.username = username
-#                 reset_session_state()
-#                 st.success("Login successful!")
-#                 st.rerun()
-#             else:
-#                 st.error("Invalid username or password")
+        if submit_button:
+            if not username or not password:
+                st.error("Please enter both username and password.")
+            elif is_admin(username, password):
+                st.session_state.logged_in = True
+                st.session_state.username = username
+                st.session_state.is_admin = True
+                reset_session_state()
+                st.success("Admin login successful!")
+                st.rerun()
+            elif check_credentials(username, password):
+                st.session_state.logged_in = True
+                st.session_state.username = username
+                reset_session_state()
+                st.success("Login successful!")
+                st.rerun()
+            else:
+                st.error("Invalid username or password")
                 
-# # Session State Reset           
-# def reset_session_state():
-#     st.session_state.chat_history = [] 
-#     st.session_state.processed_files = {} 
-#     st.session_state.vectorstore = None  
-#     st.session_state.qa_chain = None  
+# Session State Reset           
+def reset_session_state():
+    st.session_state.chat_history = [] 
+    st.session_state.processed_files = {} 
+    st.session_state.vectorstore = None  
+    st.session_state.qa_chain = None  
             
             
-# # Sign-up 
-# def signup():
-#     with st.form(key='signup_form', clear_on_submit=True):
-#         username = st.text_input("Username", key="signup_username", help="Choose a new username")
-#         password = st.text_input("Password", type="password", key="signup_password", help="Set your password")
-#         confirm_password = st.text_input("Confirm Password", type="password", key="confirm_password", help="Re-enter your password")   
+# Sign-up 
+def signup():
+    with st.form(key='signup_form', clear_on_submit=True):
+        username = st.text_input("Username", key="signup_username", help="Choose a new username")
+        password = st.text_input("Password", type="password", key="signup_password", help="Set your password")
+        confirm_password = st.text_input("Confirm Password", type="password", key="confirm_password", help="Re-enter your password")   
         
-#         submit_button = st.form_submit_button("Sign Up", help="Create a new account")
+        submit_button = st.form_submit_button("Sign Up", help="Create a new account")
         
-#         if submit_button:
-#             if not username or not password or not confirm_password:
-#                 st.error("Please enter both username and password.")
-#             elif password != confirm_password:
-#                 st.error("Passwords do not match. Please try again.")
-#             elif not check_password_strength(password):
-#                 st.error("Password must be at least 7 characters long, contain at least one uppercase letter, one lowercase letter, and one special character.")
-#             elif username_exists(username):
-#                 st.error("Username already exists. Please choose a different username.")
-#             else:
-#                 create_user(username, password)
-#                 st.success("User created successfully!")
-#                 st.session_state.logged_in = True
-#                 st.session_state.username = username
-#                 st.rerun()
+        if submit_button:
+            if not username or not password or not confirm_password:
+                st.error("Please enter both username and password.")
+            elif password != confirm_password:
+                st.error("Passwords do not match. Please try again.")
+            elif not check_password_strength(password):
+                st.error("Password must be at least 7 characters long, contain at least one uppercase letter, one lowercase letter, and one special character.")
+            elif username_exists(username):
+                st.error("Username already exists. Please choose a different username.")
+            else:
+                create_user(username, password)
+                st.success("User created successfully!")
+                st.session_state.logged_in = True
+                st.session_state.username = username
+                st.rerun()
 
-# # Main logic to toggle between login and signup form
-# if 'logged_in' not in st.session_state:
-#     st.session_state.logged_in = False
+# Main logic to toggle between login and signup form
+if 'logged_in' not in st.session_state:
+    st.session_state.logged_in = False
 
-# if not st.session_state.logged_in: 
-#     selected = option_menu(
-#         menu_title=None, 
-#         options=["Login", "Sign Up"],  
-#         icons=["box-arrow-in-right", "person-plus"], 
-#         menu_icon="cast",  
-#         default_index=0,  
-#         orientation="horizontal",  
-#         styles = {
-#     "container": {
-#         "padding": "0!important", 
-#         "background-color": "#ffffff",  
-#         "transition": "background-color 0.3s ease"  
-#     },
-#     "icon": {
-#         "color": "#007bff",  
-#         "font-size": "25px",
-#         "transition": "color 0.3s ease"  
-#     },
-#     "nav-link": {
-#         "font-size": "16px", 
-#         "text-align": "center", 
-#         "margin": "0px", 
-#         "--hover-color": "#f0f0f0",  
-#         "color": "#333",  
-#         "transition": "color 0.3s ease, background-color 0.3s ease"  
-#     },
-#     "nav-link-hover": {
-#         "background-color": "#e5e5e5",  
-#         "color": "#0056b3",  
-#         "transition": "background-color 0.3s ease, color 0.3s ease"  
-#     },
-#     "nav-link-selected": {
-#         "background-color": "#0056b3",  
-#         "color": "white", 
-#         "font-weight": "bold",  
-#         "transition": "background-color 0.3s ease, color 0.3s ease"  
-#     }
-#  }
-# )
+if not st.session_state.logged_in: 
+    selected = option_menu(
+        menu_title=None, 
+        options=["Login", "Sign Up"],  
+        icons=["box-arrow-in-right", "person-plus"], 
+        menu_icon="cast",  
+        default_index=0,  
+        orientation="horizontal",  
+        styles = {
+    "container": {
+        "padding": "0!important", 
+        "background-color": "#ffffff",  
+        "transition": "background-color 0.3s ease"  
+    },
+    "icon": {
+        "color": "#007bff",  
+        "font-size": "25px",
+        "transition": "color 0.3s ease"  
+    },
+    "nav-link": {
+        "font-size": "16px", 
+        "text-align": "center", 
+        "margin": "0px", 
+        "--hover-color": "#f0f0f0",  
+        "color": "#333",  
+        "transition": "color 0.3s ease, background-color 0.3s ease"  
+    },
+    "nav-link-hover": {
+        "background-color": "#e5e5e5",  
+        "color": "#0056b3",  
+        "transition": "background-color 0.3s ease, color 0.3s ease"  
+    },
+    "nav-link-selected": {
+        "background-color": "#0056b3",  
+        "color": "white", 
+        "font-weight": "bold",  
+        "transition": "background-color 0.3s ease, color 0.3s ease"  
+    }
+ }
+)
 
-#     # if selected == "Login":
-#     #     login()
-#     # elif selected == "Sign Up":
-#     #     signup()
-# else:
-#     # st.sidebar.markdown("You are now logged in.")
-#     st.sidebar.markdown(
-#     f"""
-#     <div style="text-align: center; position:relative; bottom:88px ; right:12px; margin-bottom:16px; padding:15px;">
-#         <img src="data:image/png;base64,{logo_base64}" alt="Logo" style="width: 150px;", "line-height:5.6," />
-#     </div>
-#     """,
-#     unsafe_allow_html=True
-# )
+    if selected == "Login":
+        login()
+    elif selected == "Sign Up":
+        signup()
+else:
+    # st.sidebar.markdown("You are now logged in.")
+    st.sidebar.markdown(
+    f"""
+    <div style="text-align: center; position:relative; bottom:88px ; right:12px; margin-bottom:16px; padding:15px;">
+        <img src="data:image/png;base64,{logo_base64}" alt="Logo" style="width: 150px;", "line-height:5.6," />
+    </div>
+    """,
+    unsafe_allow_html=True
+)
     
     # Add category for admin  
     def add_category_to_db(category_name):
