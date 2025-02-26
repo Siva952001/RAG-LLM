@@ -119,7 +119,11 @@ def create_user(username, password):
  
 # Models List   
 def list_models(model_dir):
-    return [model for model in os.listdir(model_dir) if os.path.isdir(os.path.join(model_dir, model))]
+    try:
+        return [model for model in os.listdir(model_dir) if os.path.isdir(os.path.join(model_dir, model))]
+    except FileNotFoundError:
+        print(f"Warning: Model directory {model_dir} not found")
+        return []  
 
 # Admin Credential
 def is_admin(username, password):
@@ -196,7 +200,13 @@ if 'chat_history' not in st.session_state:
 if 'processed_files' not in st.session_state:
     st.session_state.processed_files = {}
 
-MODEL_DIR = "C:/Users/DEV-037/.ollama/models/manifests/registry.ollama.ai/library"
+# Dynamic path based on operating system
+import platform
+if platform.system() == 'Windows':
+    MODEL_DIR = 'C:/Users/DEV-037/.ollama/models/manifests/registry.ollama.ai/library'
+else:
+    # Linux path
+    MODEL_DIR = '/home/adminuser/.ollama/models'
 FILE_DIR = 'files'
 DATA_DIR = 'data'
 # translator = Translator()
