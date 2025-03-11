@@ -26,7 +26,6 @@ from chat_retrieval import load_chat_retrieval,get_categories_from_db
 from file_process import process_uploaded_files
 import os
 import pandas as pd
-# import numpy as np
 import streamlit as st
 from PyPDF2 import PdfReader
 from statistics import mean
@@ -45,9 +44,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 # from langchain_community.vectorstores import Chroma
 # from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-
 logo_path = "images/logo.png"
-
 
 with open("images/logo.png", "rb") as image_file:
     logo_base64 = base64.b64encode(image_file.read()).decode("utf-8")
@@ -205,8 +202,8 @@ import platform
 if platform.system() == 'Windows':
     MODEL_DIR = 'C:/Users/DEV-037/.ollama/models/manifests/registry.ollama.ai/library'
 else:
-    # Linux path
     MODEL_DIR = '/home/adminuser/.ollama/models'
+    
 FILE_DIR = 'files'
 DATA_DIR = 'data'
 # translator = Translator()
@@ -398,50 +395,46 @@ else:
     # Chunking function
     def calculate_chunk_parameters(text):
         total_length = len(text)
-        sentences = text.split(".")
+        sentences = [s.strip() for s in text.split(".") if s.strip()]
         num_sentences = len(sentences)
-        avg_sentence_length = mean(len(sentence.strip()) for sentence in sentences if sentence.strip())
         words = text.split()
         num_words = len(words)
-        avg_word_length = mean(len(word) for word in words) if num_words > 0 else 0
+
+        avg_sentence_length = sum(len(s) for s in sentences) / num_sentences if num_sentences > 0 else 0
+        avg_word_length = sum(len(w) for w in words) / num_words if num_words > 0 else 0
         text_density = num_words / num_sentences if num_sentences > 0 else 0
 
-        # Base chunk size and overlap
+        # Base chunk size
         chunk_size = 600
         chunk_overlap = 100
 
         # Adjust chunk size based on text length
-        if total_length < 5000:
-            chunk_size += 0
-        elif total_length < 20000:
-            chunk_size += 200
-        else:
+        if total_length >= 20000:
             chunk_size += 400
+        elif total_length >= 5000:
+            chunk_size += 200
 
-        # Adjust chunk size based on average sentence length
+        # Adjust based on sentence length
         if avg_sentence_length > 100:
             chunk_size += 300
         elif avg_sentence_length < 20:
             chunk_size -= 100
 
-        # Adjust chunk size based on average word length
+        # Adjust based on word length
         if avg_word_length > 6:
             chunk_size += 100
         elif avg_word_length < 4:
             chunk_size -= 50
 
-        # Adjust chunk size based on text density
+        # Adjust based on text density
         if text_density > 20:
             chunk_size += 200
         elif text_density < 10:
             chunk_size -= 100
 
-        # Overlap adjustments (dynamic scaling)
-        chunk_overlap = max(100, int(chunk_size * 0.2))
-
-        # Ensure chunk_size and chunk_overlap
-        chunk_size = max(chunk_size, 300)  
-        chunk_overlap = min(chunk_overlap, chunk_size // 2)  
+        # Ensure valid values
+        chunk_size = max(chunk_size, 300)
+        chunk_overlap = min(max(100, int(chunk_size * 0.2)), chunk_size // 2)
 
         return chunk_size, chunk_overlap
 
